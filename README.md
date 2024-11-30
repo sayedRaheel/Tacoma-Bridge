@@ -1,6 +1,9 @@
-# Tacoma Narrows Bridge Analysis Project
+## The Tacoma Narrows Bridge: About The Project
+A comprehensive analysis implementing the McKenna and Tuama (2001) mathematical model to study the catastrophic collapse of the 1940 Tacoma Narrows Bridge. This project focuses on simulating and analyzing how torsional oscillations were magnified by vertical forcing, leading to the bridge's failure.
 
-A mathematical analysis and simulation of the 1940 Tacoma Narrows Bridge collapse using numerical methods and Python.
+### The Historical Context
+The Tacoma Narrows Bridge, opened in July 1940, collapsed just four months later due to wind-induced aeroelastic flutter. This project examines the engineering principles behind this famous structural failure through mathematical modeling and numerical analysis.
+
 <div>
   <img src="/Images/tacoma.png" alt="Tacoma" />
 </div>
@@ -53,11 +56,24 @@ This project implements and analyzes the McKenna and Tuama (2001) mathematical m
 - Timothy Sauer's Numerical Analysis (3rd Edition)
 - Historical documentation of the 1940 Tacoma Narrows Bridge
 - Python for Data Analysis (2nd Edition)
+## Citations
 
+### Image Sources
+- [Historical Newspaper Image of Tacoma Narrows Bridge](https://www.newspapers.com/image/289713513)
+- [Opening Day of Tacoma Narrows Bridge](https://en.wikipedia.org/wiki/Tacoma_Narrows_Bridge_(1940))
+
+### Literature & Documentation
+- **Main Reference**: Timothy Sauer, "Numerical Analysis" (Pearson, 3rd Edition, 2017)
+- [Tacoma Narrows Bridge Wikipedia Article](https://en.wikipedia.org/wiki/Tacoma_Narrows_Bridge_(1940))
+- McKinney, Wes. "Python for Data Analysis" (2nd Edition, AIM-5001 Course Textbook)
+
+### Code Implementation References
+- Bisection Method Implementation: Timothy Sauer's Numerical Analysis
+- Python Syntax and Library Functions: Standard Python Documentation
+- Convergence Analysis: Based on numerical methods described in Sauer's textbook
+
+All images used are in public domain or used under appropriate licensing terms.
 ## Contributors
 
-[Your Name]
+Sayed Raheel Hussain
 
-## License
-
-[Your License Choice]
