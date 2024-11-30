@@ -73,7 +73,4 @@ This project implements and analyzes the McKenna and Tuama (2001) mathematical m
 - Convergence Analysis: Based on numerical methods described in Sauer's textbook
 
 All images used are in public domain or used under appropriate licensing terms.
-## Contributors
-
-Sayed Raheel Hussain
 
