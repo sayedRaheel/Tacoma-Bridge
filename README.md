@@ -2,12 +2,12 @@
 
 A mathematical analysis and simulation of the 1940 Tacoma Narrows Bridge collapse using numerical methods and Python.
 <div>
-  <img src="images/tacoma.png" alt="Tacoma" />
+  <img src="/Images/tacoma.png" alt="Tacoma" />
 </div>
 
 ## Numerical Analysis
 <div>
-  <img src="images/numerical.png" alt="numerical" />
+  <img src="/Images/numerical.png" alt="numerical" />
 </div>
   
 ## Project Overview
