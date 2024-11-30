@@ -1,7 +1,15 @@
 # Tacoma Narrows Bridge Analysis Project
 
 A mathematical analysis and simulation of the 1940 Tacoma Narrows Bridge collapse using numerical methods and Python.
-![Tacoma Narrows Bridge](images/tacoma.png) 
+  <div>
+    <img src="/images/tacoma.png" alt="Tacoma" />
+  </div>
+
+## Numerical Analysis
+  <div>
+    <img src="/images/numerical.png" alt="numerical" />
+  </div>
+  
 ## Project Overview
 
 This project implements and analyzes the McKenna and Tuama (2001) mathematical model of the Tacoma Narrows Bridge incident, focusing on how torsional oscillations can be magnified by vertical forcing.
