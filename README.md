@@ -1,5 +1,9 @@
-## The Tacoma Narrows Bridge: About The Project
+## The Tacoma Narrows Bridge: About The Project 
 A comprehensive analysis implementing the McKenna and Tuama (2001) mathematical model to study the catastrophic collapse of the 1940 Tacoma Narrows Bridge. This project focuses on simulating and analyzing how torsional oscillations were magnified by vertical forcing, leading to the bridge's failure.
+
+Copy## Interactive Demo
+Check out our [interactive bridge animation](https://claude.site/artifacts/39a5c9ca-a6a3-4cc4-8715-2aec7fbe090f) to visualize the bridge's behavior under different wind conditions.
+
 
 ### The Historical Context
 The Tacoma Narrows Bridge, opened in July 1940, collapsed just four months later due to wind-induced aeroelastic flutter. This project examines the engineering principles behind this famous structural failure through mathematical modeling and numerical analysis.
