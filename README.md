@@ -74,149 +74,146 @@ This project implements and analyzes the McKenna and Tuama (2001) mathematical m
 
 All images used are in public domain or used under appropriate licensing terms.
 
+# Tacoma Narrows Bridge: Numerical Analysis of Structural Dynamics
 
-
-# The Dance of Destruction: Engineering Analysis of the Tacoma Narrows Bridge Collapse
+## Project Overview
+Implementation of McKenna-Tuama (2001) mathematical model analyzing the catastrophic collapse of the 1940 Tacoma Narrows Bridge. This study examines torsional oscillations magnified by vertical forcing through numerical methods and stability analysis.
 
 ```mermaid
 graph TD
-    A[Wind Forces] -->|Aeroelastic Flutter| B[Bridge Oscillations]
-    B -->|Torsional Movement| C[Structural Stress]
-    C -->|Resonance| D[Catastrophic Failure]
-    style A fill:#ff9999
-    style B fill:#99ff99
-    style C fill:#9999ff
-    style D fill:#ff99ff
+    A[Mathematical Model] --> B[Numerical Analysis]
+    B --> C[Stability Study]
+    C --> D[Critical Points]
+    D --> E[Failure Analysis]
+    
+    subgraph "Analysis Methods"
+    F[Euler Method]
+    G[Trapezoid Method]
+    H[RK4 Method]
+    end
+    
+    B --> F & G & H
 ```
 
-## 🌊 The Perfect Storm: Nature Meets Engineering
+## Technical Implementation
 
-On November 7, 1940, the world witnessed one of the most dramatic engineering failures in history. The Tacoma Narrows Bridge, nicknamed "Galloping Gertie," transformed from a marvel of modern engineering into a cautionary tale about the power of resonance and aeroelastic flutter.
-
-### 📊 Project Scope
-This analysis implements the McKenna-Tuama (2001) mathematical model to:
-- Simulate wind-induced oscillations
-- Calculate critical failure points
-- Visualize the bridge's behavior under various conditions
-
-```mermaid
-stateDiagram-v2
-    [*] --> Stable
-    Stable --> Oscillating: Wind Speed > 42 km/h
-    Oscillating --> Critical: Wind Speed > 59 km/h
-    Critical --> Failure: Resonance
-    Failure --> [*]
-```
-
-## 🔬 Mathematical Deep Dive
-
-### The Core Equations
-The bridge's behavior is modeled by coupled differential equations:
-
-```mermaid
-graph LR
-    A[Vertical Motion] -->|Coupling| B[Torsional Motion]
-    B -->|Feedback| A
-    style A fill:#f96
-    style B fill:#96f
-```
-
-### Numerical Methods Implementation
-
+### Core Mathematical Framework
 ```python
-def runge_kutta_4(f, y0, t):
+# Core differential equations system
+def bridge_dynamics(t, y, params):
     """
-    Fourth-order Runge-Kutta method
-    Parameters:
-        f: System of differential equations
-        y0: Initial conditions
-        t: Time points
+    Coupled differential equations for bridge motion
+    y = [vertical_displacement, angular_displacement, 
+         vertical_velocity, angular_velocity]
     """
+    w, delta, alpha = params
+    dy = np.zeros_like(y)
+    dy[0] = y[2]
+    dy[1] = y[3]
+    dy[2] = -w**2 * y[0] - delta * y[2] + alpha * y[1]
+    dy[3] = -w**2 * y[1] - delta * y[3] - alpha * y[0]
+    return dy
+```
+
+### Numerical Methods
+1. **Implemented Solvers**
+   - Euler's Method
+   - Trapezoid Method (2nd order)
+   - Runge-Kutta 4 (4th order)
+
+2. **Convergence Analysis**
+   ```mermaid
+   graph LR
+       A[Initial State] --> B[RK4 Solver]
+       B --> C{Convergence Check}
+       C -->|Yes| D[Solution]
+       C -->|No| E[Refine Step]
+       E --> B
+   ```
+
+## Critical Findings
+
+### Wind Speed Analysis
+- **Safe Operation**: < 42 km/h
+- **Warning Zone**: 42-59 km/h
+- **Critical Speed**: 59.01 km/h (RK4 calculation)
+- **Failure Point**: > 62 km/h
+
+### Stability Parameters
+| Parameter | Original Value | Modified Value | Impact |
+|-----------|---------------|----------------|---------|
+| Damping Coefficient | 0.01 | 0.02 | Wind resistance: 59.01 → 105.62 km/h |
+| Initial Angle | 0.01 rad | 0.02 rad | Linear response below critical speed |
+| Wind Speed | 80 km/h | Various | Non-linear behavior above 59.01 km/h |
+
+## Technical Results
+
+### Solver Comparison
+```mermaid
+graph TD
+    A[Accuracy Comparison] --> B[RK4: Highest Accuracy]
+    A --> C[Trapezoid: Moderate Accuracy]
+    A --> D[Euler: Basic Accuracy]
+    
+    E[Computational Cost] --> F[RK4: Highest]
+    E --> G[Trapezoid: Moderate]
+    E --> H[Euler: Lowest]
+```
+
+### Key Numerical Results
+1. **RK4 Method**
+   - Error convergence: O(h⁴)
+   - Critical wind speed: 59.01 km/h ± 0.01
+   - Stability threshold: 0.01 rad
+
+2. **Damping Analysis**
+   - Original coefficient: 59.01 km/h threshold
+   - Doubled coefficient: 105.62 km/h threshold
+   - Linear stability region: < 42 km/h
+
+## Implementation Details
+
+### Required Dependencies
+```python
+import numpy as np
+import scipy.integrate
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+```
+
+### Core Functions
+```python
+def runge_kutta_4(f, y0, t, params):
     y = np.zeros((len(t), len(y0)))
     y[0] = y0
+    h = t[1] - t[0]
+    
     for i in range(1, len(t)):
-        h = t[i] - t[i-1]
-        k1 = f(t[i-1], y[i-1])
-        k2 = f(t[i-1] + h/2, y[i-1] + k1*h/2)
-        k3 = f(t[i-1] + h/2, y[i-1] + k2*h/2)
-        k4 = f(t[i-1] + h, y[i-1] + k3*h)
+        k1 = f(t[i-1], y[i-1], params)
+        k2 = f(t[i-1] + h/2, y[i-1] + k1*h/2, params)
+        k3 = f(t[i-1] + h/2, y[i-1] + k2*h/2, params)
+        k4 = f(t[i-1] + h, y[i-1] + k3*h, params)
         y[i] = y[i-1] + (k1 + 2*k2 + 2*k3 + k4)*h/6
     return y
 ```
 
-## 🎯 Key Findings
-
-### Critical Wind Speeds
-
-```mermaid
-graph TD
-    A[Safe Zone <42 km/h] -->|Increasing Wind| B[Warning Zone 42-59 km/h]
-    B -->|Critical Point| C[Danger Zone >59 km/h]
-    C -->|Flutter| D[Failure Zone >62 km/h]
-    style A fill:#90EE90
-    style B fill:#FFD700
-    style C fill:#FFA500
-    style D fill:#FF4500
-```
-
-### Stability Analysis Results
-1. **Safe Operation**: < 42 km/h
-   - Minimal oscillations
-   - Normal structural response
-2. **Warning Zone**: 42-59 km/h
-   - Visible oscillations
-   - Increased structural stress
-3. **Critical Point**: 59.01 km/h
-   - Onset of aeroelastic flutter
-   - Rapid energy accumulation
-4. **Failure Zone**: > 62 km/h
-   - Catastrophic oscillations
-   - Structural integrity compromise
-
-## 🛠 Technical Implementation
-
-### Solver Comparison
-
-| Method | Accuracy | Computational Cost | Stability |
-|--------|----------|-------------------|-----------|
-| Euler | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
-| Trapezoidal | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
-| RK4 | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-
-### Convergence Analysis
-
-```mermaid
-graph LR
-    A[Initial Conditions] --> B{Convergence Check}
-    B -->|Converged| C[Solution]
-    B -->|Not Converged| D[Step Refinement]
-    D --> B
-```
-
-## 🔧 Project Setup
-
+## Usage Instructions
 ```bash
-# Clone repository
-git clone https://github.com/username/tacoma-narrows-analysis.git
-
-# Install dependencies
+# Install requirements
 pip install -r requirements.txt
 
 # Run analysis
-python src/main.py
+python src/main.py --wind-speed 80 --method rk4 --damping 0.01
+
+# Generate visualizations
+python src/visualize.py --results results.csv
 ```
 
-## 📚 References
+## References
+1. McKenna & Tuama (2001): "Large Torsional Oscillations in Suspension Bridges"
+2. Timothy Sauer: "Numerical Analysis" (3rd Edition)
+3. Historical documentation: Tacoma Narrows Bridge (1940)
 
-1. McKenna, P.J., and Tuama, C.O. (2001). "Large Torsional Oscillations in Suspension Bridges"
-2. Billah, K.Y., and Scanlan, R.H. (1991). "Resonance, Tacoma Narrows Bridge Failure"
-3. Sauer, T. (2017). "Numerical Analysis, 3rd Edition"
-
-## 🤝 Contributing
-
-Contributions welcome! Please read `CONTRIBUTING.md` for details on our code of conduct and submission process.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the `LICENSE.md` file for details.
+## License
+MIT License - See LICENSE.md for details.
 
